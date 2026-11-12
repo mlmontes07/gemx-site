@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="gemX — Your All-in-One HRIS & Payroll Platform, built for 100% Philippine Compliance."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#FAF8F5" />
+    <script>
+      (function () {
+        var mode = 'auto';
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var q = params.get('theme');
+          if (q === 'light' || q === 'dark' || q === 'auto') {
+            mode = q;
+            sessionStorage.setItem('gemx-theme-mode', q);
+          } else {
+            var saved = sessionStorage.getItem('gemx-theme-mode');
+            if (saved === 'light' || saved === 'dark' || saved === 'auto') mode = saved;
+          }
+        } catch (e) {}
+        var hour = new Date().getHours();
+        var resolved = mode === 'auto' ? (hour >= 6 && hour < 18 ? 'light' : 'dark') : mode;
+        document.documentElement.dataset.theme = resolved;
+        var cs = document.querySelector('meta[name="color-scheme"]');
+        if (cs) cs.content = resolved;
+        var tc = document.querySelector('meta[name="theme-color"]');
+        if (tc) tc.content = resolved === 'dark' ? '#071128' : '#FAF8F5';
+      })();
+    </script>
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>gemX | All-in-One HRIS Built for Philippine Compliance</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ulthra_website_app_prod
+    restart: always
+    ports:
+      - "${BIND_ADDR:-0.0.0.0}:${PORT:-8383}:80"
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./logs:/var/log/nginx
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/healthz || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    networks:
+      - frontend
+
+networks:
+  frontend:
+    driver: bridge
+
