@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Building2, Check, MapPin, Palette, ShieldCheck } from 'lucide-react';
+import { HumanStoryCard } from '../components/HumanStoryCard';
 import { UiMockupCard } from '../components/UiMockupCard';
 
 const COMPANY_THEMES = [
@@ -87,23 +88,35 @@ export function MultiCompanyPage() {
             </div>
           </div>
 
-          <UiMockupCard
-            preview={{
-              eyebrow: 'Conglomerate Hub',
-              title: 'Apex Group · 4 Sister Companies',
-              highlightLabel: 'Data Separation',
-              highlightValue: '100% Private',
-              metrics: [
-                { label: 'Companies in Group', value: '4 Entities' },
-                { label: 'Total Branches', value: '23 Locations' },
-              ],
-              items: [
-                { title: 'Apex Holdings Corp. (Parent)', subtitle: 'Active Workspace · Signature Navy & Gold Theme', status: 'Active', tone: 'mint' },
-                { title: 'Verdant Retail Inc. (Subsidiary)', subtitle: 'Separate TIN, SSS, Payroll & Careers Page', status: 'Switch →', tone: 'sky' },
-                { title: 'Lumina Medical Centers (Subsidiary)', subtitle: 'Separate HMO, Shifts & 201 Masterfile', status: 'Switch →', tone: 'violet' },
-              ],
-            }}
-          />
+          <div style={{ display: 'grid', gap: '1.15rem' }}>
+            <HumanStoryCard
+              priority
+              photo="executive-multicompany"
+              alt="Three Filipino business and HR executives collaborating calmly in a modern Manila boardroom"
+              problemLabel="Before: Logging in and out of 4 separate systems"
+              solutionBadge="With gemX: One executive view, 100% private entities"
+              quote="Our shared-services HR team switches across four sister companies in one click while keeping every company’s payroll and records strictly separate."
+              personAttribution="VP of Shared Services · Philippine Holding Group"
+            />
+
+            <UiMockupCard
+              preview={{
+                eyebrow: 'Conglomerate Hub',
+                title: 'Apex Group · 4 Sister Companies',
+                highlightLabel: 'Data Separation',
+                highlightValue: '100% Private',
+                metrics: [
+                  { label: 'Companies in Group', value: '4 Entities' },
+                  { label: 'Total Branches', value: '23 Locations' },
+                ],
+                items: [
+                  { title: 'Apex Holdings Corp. (Parent)', subtitle: 'Active Workspace · Signature Navy & Gold Theme', status: 'Active', tone: 'mint' },
+                  { title: 'Verdant Retail Inc. (Subsidiary)', subtitle: 'Separate TIN, SSS, Payroll & Careers Page', status: 'Switch →', tone: 'sky' },
+                  { title: 'Lumina Medical Centers (Subsidiary)', subtitle: 'Separate HMO, Shifts & 201 Masterfile', status: 'Switch →', tone: 'violet' },
+                ],
+              }}
+            />
+          </div>
         </div>
       </section>
 

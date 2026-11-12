@@ -16,7 +16,7 @@ This guide provides the end-to-end instructions, Docker Compose workflows, rever
 6. [Nginx Container Routing, Caching & Security (`docker/nginx/default.conf`)](#6-nginx-container-routing-caching--security-dockernginxdefaultconf)
 7. [Reverse Proxy & SSL/TLS Setup (Cloudflare & Let's Encrypt)](#7-reverse-proxy--ssltls-setup-cloudflare--lets-encrypt)
 8. [Post-Deployment Verification & Smoke Tests](#8-post-deployment-verification--smoke-tests)
-9. [Updating, Logs & Troubleshooting](#9-updating-logs--troubleshooting)
+9. [Updating the Deployed Website (`gemx.ph`), Logs & Troubleshooting](#9-updating-the-deployed-website-gemxph-logs--troubleshooting)
 
 ---
 
@@ -30,7 +30,7 @@ This guide provides the end-to-end instructions, Docker Compose workflows, rever
 ```mermaid
 flowchart TB
     subgraph Client["Visitor Browser"]
-        HTTPS["HTTPS Request (gemx.online)"]
+        HTTPS["HTTPS Request (gemx.ph / hub.gemx.ph)"]
     end
 
     subgraph HostVPS["Linux VPS / DigitalOcean Droplet"]
@@ -45,9 +45,9 @@ flowchart TB
         end
     end
 
-    HTTPS -->|gemx.online| HostNginx
+    HTTPS -->|gemx.ph| HostNginx
     HostNginx -->|proxy_pass 127.0.0.1:8383| WebContainer
-    HostNginx -.->|app.gemx.online -> 127.0.0.1:8282| HrisContainer
+    HostNginx -.->|hub.gemx.ph -> 127.0.0.1:8282| HrisContainer
 ```
 
 ### Container & File Inventory
@@ -110,7 +110,7 @@ cd ulthra-website
 
 ### Scenario A: Co-Hosted on the Same VPS Alongside `ulthra-mezzio` (Recommended)
 
-When hosting both the marketing website (`gemx.online`) and the HRIS application (`app.gemx.online`) on the same server:
+When hosting both the marketing website (`gemx.ph`) and the HRIS application (`hub.gemx.ph`) on the same server:
 
 1. **Configure `.env` to bind locally on port `8383`**:
    ```bash
@@ -121,7 +121,8 @@ When hosting both the marketing website (`gemx.online`) and the HRIS application
    ```dotenv
    PORT=8383
    BIND_ADDR=127.0.0.1
-   DOMAIN=gemx.online
+   DOMAIN=gemx.ph
+   HUB_DOMAIN=hub.gemx.ph
    ```
 
 2. **Build and launch the production container**:
@@ -129,11 +130,29 @@ When hosting both the marketing website (`gemx.online`) and the HRIS application
    ./deploy.sh
    ```
 
-3. **Provision the Host Nginx Reverse Proxy vhost**:
+3. **Provision the Host Nginx Reverse Proxy vhosts (`gemx.ph` + `hub.gemx.ph`)**:
+   Both projects read their target domains and ports directly from `.env`, so no CLI arguments are required:
    ```bash
-   ./docker/setup-nginx-proxy.sh gemx.online 8383
+   # Marketing website -> reads DOMAIN (gemx.ph) & PORT (8383) from ulthra-website/.env
+   ./docker/setup-nginx-proxy.sh
+
+   # HRIS application -> reads APP_DOMAIN (hub.gemx.ph), PORT (8282), WEBSOCKET_PORT (8989),
+   # and LEGACY_REDIRECT_DOMAIN (gemx-staging.lunarxlabs.com -> 301 redirect) from ulthra-mezzio/.env
+   cd ../ulthra-mezzio
+   ./docker/setup-nginx-proxy.sh
    ```
-   This creates `/etc/nginx/sites-available/gemx.online.conf` forwarding port `80`/`443` traffic for `gemx.online` (and `www.gemx.online`) to `http://127.0.0.1:8383` without touching your existing `ulthra-mezzio` Nginx vhost on `127.0.0.1:8282`.
+   This creates `/etc/nginx/sites-available/gemx.ph.conf` forwarding port `80`/`443` traffic for `gemx.ph` (and `www.gemx.ph`) to `http://127.0.0.1:8383`, alongside `/etc/nginx/sites-available/hub.gemx.ph.conf` (`http://127.0.0.1:8282`) and an automatic `301` redirect from `gemx-staging.lunarxlabs.com` to `https://hub.gemx.ph`.
+
+### Changing Domains or Subdomains Later via `.env` (Zero Image Rebuild Needed)
+
+Because `docker/40-env-config.sh` writes `/usr/share/nginx/html/env-config.js` dynamically on every container start, changing either `DOMAIN` or `HUB_DOMAIN` in the future takes seconds:
+
+1. Edit `.env` inside `ulthra-website/` (e.g., `HUB_DOMAIN=portal.gemx.ph`).
+2. Recreate the container so `/env-config.js` refreshes with the new `.env` values (no `--build` needed):
+   ```bash
+   docker compose -f docker-compose.server.yml up -d
+   ```
+3. If `DOMAIN` itself changed, run `./docker/setup-nginx-proxy.sh` to provision the updated Host Nginx vhost.
 
 ---
 
@@ -142,7 +161,7 @@ When hosting both the marketing website (`gemx.online`) and the HRIS application
 If deploying `ulthra-website` onto its own dedicated VM without any other web apps on port `80`:
 
 #### Option 1 — Behind Host Nginx + TLS (Recommended for HTTPS)
-Keep `BIND_ADDR=127.0.0.1` and `PORT=8383` in `.env`, run `./deploy.sh`, and run `./docker/setup-nginx-proxy.sh gemx.online 8383` (plus `sudo certbot --nginx -d gemx.online -d www.gemx.online` if not using Cloudflare Origin/Full SSL).
+Keep `BIND_ADDR=127.0.0.1` and `PORT=8383` in `.env`, run `./deploy.sh`, and run `./docker/setup-nginx-proxy.sh gemx.ph 8383` (plus `sudo certbot --nginx -d gemx.ph -d www.gemx.ph` if not using Cloudflare Origin/Full SSL).
 
 #### Option 2 — Direct Container Binding on Port `80` (Behind Cloud Load Balancer)
 If SSL/TLS is terminated upstream by a DigitalOcean Load Balancer or Cloudflare Tunnel:
@@ -164,7 +183,9 @@ Then run:
 | `PORT` | `8383` | Host TCP port mapped to Nginx port `80` inside the container (`8383` avoids colliding with `ulthra-mezzio`'s `8282`) |
 | `BIND_ADDR` | `0.0.0.0` | Host interface bound in `docker-compose.server.yml`. Set to `127.0.0.1` when behind host Nginx so port `8383` is not exposed directly |
 | `DEV_PORT` | `4321` | Host TCP port for the optional `dev` profile container (`docker compose --profile dev up`) |
-| `DOMAIN` | `gemx.online` | Default domain passed to `./docker/setup-nginx-proxy.sh` |
+| `DOMAIN` | `gemx.ph` | Primary marketing website domain read automatically from `.env` by `./docker/setup-nginx-proxy.sh` and the container |
+| `HUB_DOMAIN` | `hub.gemx.ph` | HRIS Hub subdomain read dynamically at container startup (`/env-config.js`) for all **Sign In** links—change anytime without rebuilding |
+| `HUB_URL` | `https://${HUB_DOMAIN}` | Optional full URL override if using a custom port or scheme |
 
 ---
 
@@ -188,15 +209,15 @@ Inside the container, [`docker/nginx/default.conf`](docker/nginx/default.conf) e
 ## 7. Reverse Proxy & SSL/TLS Setup (Cloudflare & Let's Encrypt)
 
 ### Using Cloudflare (Full / Full Strict SSL)
-1. Run `./docker/setup-nginx-proxy.sh gemx.online 8383` on the server.
-2. Point your Cloudflare DNS `A` records (`@` and `www`) to the server's public IP with Proxy (`Orange Cloud`) enabled and SSL/TLS mode set to **Full** (or install a Cloudflare Origin Certificate at `/etc/nginx/ssl/gemx.online.crt` and `.key` for **Full (Strict)**).
+1. Run `./docker/setup-nginx-proxy.sh gemx.ph 8383` on the server.
+2. Point your Cloudflare DNS `A` records (`@` and `www`) to the server's public IP with Proxy (`Orange Cloud`) enabled and SSL/TLS mode set to **Full** (or install a Cloudflare Origin Certificate at `/etc/nginx/ssl/gemx.ph.crt` and `.key` for **Full (Strict)**).
 
 ### Using Let's Encrypt (Certbot Direct TLS)
 If DNS is unproxied (`Grey Cloud` or non-Cloudflare DNS):
 ```bash
-./docker/setup-nginx-proxy.sh gemx.online 8383
+./docker/setup-nginx-proxy.sh gemx.ph 8383
 sudo apt-get install -y certbot python3-certbot-nginx
-sudo certbot --nginx -d gemx.online -d www.gemx.online --redirect
+sudo certbot --nginx -d gemx.ph -d www.gemx.ph --redirect
 ```
 
 ---
@@ -233,15 +254,52 @@ curl -fsS -o /dev/null -w "logo-dark: %{http_code}\n" "http://127.0.0.1:${PORT}/
 
 ---
 
-## 9. Updating, Logs & Troubleshooting
+## 9. Updating the Deployed Website (`gemx.ph`), Logs & Troubleshooting
 
-### Deploying Code or Copy Updates
-Pull the latest branch changes and re-run `./deploy.sh`:
+### Is It Safe to Just Re-Run `./deploy.sh`?
+**Yes — re-running `./deploy.sh` is the recommended, safe way to update `gemx.ph`.**
+- Your existing production `.env` file (`PORT`, `BIND_ADDR`, `DOMAIN=gemx.ph`, `HUB_DOMAIN=hub.gemx.ph`) and `./logs` directory are **never overwritten**.
+- Docker builds the new TypeScript + Vite production bundle in Stage 1 **while the existing `ulthra_website_app_prod` container continues serving live traffic**, then swaps the container in ~1 second.
+- `docker/40-env-config.sh` automatically regenerates `/env-config.js` on startup, and untagged `<none>` build images are pruned automatically (`docker image prune -f`) so server disk space stays clean.
+- You do **not** need to re-run `./docker/setup-nginx-proxy.sh` or Certbot on regular updates (only if you changed `DOMAIN` or `PORT` in `.env`).
+
+### Step-by-Step: Deploying Code, Copy, Styling, or Image Updates to `gemx.ph`
+
 ```bash
-git pull origin feature/end-to-end-hris
+# 1. Navigate to the website directory on the server
+cd /opt/PayrollHand/ulthra-website
+
+# 2. Pull the latest branch changes
+git pull
+
+# 3. Rebuild and swap the production container (~1s cutover)
+./deploy.sh
+
+# 4. Quick verification (expect HTTP 200)
+curl -fsS -o /dev/null -w "healthz: %{http_code}\n" "http://127.0.0.1:${PORT:-8383}/healthz"
+```
+
+> **Clean Rebuild Option:** If `package.json` / Alpine base packages changed and you want a clean build without cached layers, run:
+> ```bash
+> ./deploy.sh --no-cache
+> ```
+
+### Step-by-Step: Updating Only `.env` Values (No Rebuild Needed)
+If you only edited `.env` (for example, changing `HUB_DOMAIN` for the **Sign In** button):
+```bash
+cd /opt/PayrollHand/ulthra-website
+nano .env
+docker compose -f docker-compose.server.yml up -d
+```
+*(If you also changed `DOMAIN` or `PORT` in `.env`, run `./docker/setup-nginx-proxy.sh` right after to update the Host Nginx reverse proxy.)*
+
+### Quick Rollback to a Previous Release
+```bash
+cd /opt/PayrollHand/ulthra-website
+git log --oneline -n 5
+git checkout <previous-commit-sha>
 ./deploy.sh
 ```
-Docker rebuilds the Vite bundle in Stage 1 and swaps `ulthra_website_app_prod` in ~1–2 seconds.
 
 ### Viewing Logs
 ```bash

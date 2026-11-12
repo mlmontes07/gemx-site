@@ -9,6 +9,7 @@ import {
   Clock,
   HeartHandshake,
   Laptop,
+  LogIn,
   Menu,
   Moon,
   PhilippinePeso,
@@ -19,6 +20,7 @@ import {
   X,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { HUB_SIGN_IN_URL } from '../config/site';
 import { GemxLogo } from './GemxLogo';
 
 const PRODUCT_NAV_ITEMS = [
@@ -274,6 +276,11 @@ export function Navbar() {
             <span className="nv-theme-pill-label">{themeBadgeLabel}</span>
           </button>
 
+          <a href={HUB_SIGN_IN_URL} className="nv-signin-link">
+            <LogIn size={15} aria-hidden="true" />
+            <span>Sign In</span>
+          </a>
+
           <Link to="/request-demo" className="btn-primary" style={{ minBlockSize: '2.55rem', padding: '0.5rem 1.2rem' }}>
             Request a Demo
           </Link>
@@ -343,6 +350,32 @@ export function Navbar() {
                   HR ROI &amp; Time-Savings Calculator
                 </Link>
               </div>
+            </div>
+
+            <div
+              style={{
+                paddingBlockStart: '0.75rem',
+                borderBlockStart: '1px solid var(--border-hairline)',
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '0.65rem',
+              }}
+            >
+              <a
+                href={HUB_SIGN_IN_URL}
+                className="btn-secondary"
+                style={{ flex: '1 1 11rem', justifyContent: 'center', minBlockSize: '2.65rem' }}
+              >
+                <LogIn size={16} aria-hidden="true" />
+                <span>Sign In to gemX</span>
+              </a>
+              <Link
+                to="/request-demo"
+                className="btn-primary"
+                style={{ flex: '1 1 11rem', justifyContent: 'center', minBlockSize: '2.65rem' }}
+              >
+                Request a Demo
+              </Link>
             </div>
           </div>
         </nav>

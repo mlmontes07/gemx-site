@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 set -e
 
-DOMAIN="${1:-gemx.online}"
-APP_PORT="${2:-8383}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_ENV="${SCRIPT_DIR}/../.env"
+if [ -f "$ROOT_ENV" ]; then
+  set -a
+  # shellcheck disable=SC1090
+  source "$ROOT_ENV"
+  set +a
+fi
+
+DOMAIN="${1:-${DOMAIN:-gemx.ph}}"
+APP_PORT="${2:-${PORT:-8383}}"
 
 echo "🔧 Setting up Multi-App Host Nginx Reverse Proxy for ${DOMAIN} (-> 127.0.0.1:${APP_PORT})..."
 

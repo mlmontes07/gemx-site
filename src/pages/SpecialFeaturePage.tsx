@@ -1,5 +1,6 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowRight, Check, Laptop, Wallet } from 'lucide-react';
+import { HumanStoryCard, PeoplePhotoSlug } from '../components/HumanStoryCard';
 import { UiMockupCard } from '../components/UiMockupCard';
 
 const FEATURE_SPOTLIGHTS = {
@@ -39,6 +40,14 @@ const FEATURE_SPOTLIGHTS = {
       'Spot burnout or overloaded workloads early before deadlines slip',
       'Connected directly to gemX Attendance—no separate tracker subscription needed',
     ],
+    story: {
+      photo: 'feature-workpulse' as PeoplePhotoSlug,
+      alt: 'Relaxed Filipina professional smiling while working productively from a sunlit, plant-filled home study in Manila',
+      problemLabel: 'Before: Guessing remote workloads & burnout',
+      solutionBadge: 'Outcome: Trusted hybrid focus & balanced hours',
+      quote: 'Remote staff enjoy calm work-from-home flexibility while managers see clear project progress without constant status pings.',
+      attribution: 'WorkPulse Outcome · Healthy Hybrid Productivity',
+    },
   },
   'salary-payouts': {
     icon: Wallet,
@@ -76,6 +85,14 @@ const FEATURE_SPOTLIGHTS = {
       'Real-time confirmation status for every disbursed employee payout',
       'Clear audit trail connecting approved payroll registers to finance treasury',
     ],
+    story: {
+      photo: 'feature-salary-payouts' as PeoplePhotoSlug,
+      alt: 'Two happy young Filipino coworkers smiling over iced coffees at a sunny BGC cafe while checking an instant payday notification',
+      problemLabel: 'Before: Manual bank encoding & delayed paydays',
+      solutionBadge: 'Outcome: Instant wallet & bank disbursements',
+      quote: 'The moment payroll is approved, salaries land reliably and every team member gets to enjoy payday right on schedule.',
+      attribution: 'Salary Payouts Outcome · Zero-Delay Payday Joy',
+    },
   },
 } as const;
 
@@ -124,12 +141,23 @@ export function SpecialFeaturePage() {
             </div>
           </div>
 
-          <UiMockupCard preview={data.preview} />
+          <div style={{ display: 'grid', gap: '1.15rem' }}>
+            <HumanStoryCard
+              priority
+              photo={data.story.photo}
+              alt={data.story.alt}
+              problemLabel={data.story.problemLabel}
+              solutionBadge={data.story.solutionBadge}
+              quote={data.story.quote}
+              personAttribution={data.story.attribution}
+            />
+            <UiMockupCard preview={data.preview} />
+          </div>
         </div>
       </section>
 
       <section className="phr-section phr-section--alt">
-        <div className="phr-container" style={{ maxInlineSize: '50rem' }}>
+        <div className="phr-container" style={{ maxInlineSize: '52rem' }}>
           <div className="space-card" style={{ padding: 'clamp(1.75rem, 4vw, 2.75rem)' }}>
             <h2 className="phr-h2" style={{ marginBlockEnd: '0.85rem' }}>
               {data.secondTitle}
@@ -153,4 +181,3 @@ export function SpecialFeaturePage() {
     </main>
   );
 }
-

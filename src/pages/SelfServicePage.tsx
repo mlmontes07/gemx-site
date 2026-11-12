@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check, Fingerprint, Smartphone } from 'lucide-react';
+import { HumanStoryCard, PeoplePhotoSlug } from '../components/HumanStoryCard';
 import { UiMockupCard } from '../components/UiMockupCard';
 
 const AUDIENCES = {
   employees: {
     label: 'For Employees',
+    photo: 'employee-mobile-pocket' as PeoplePhotoSlug,
+    photoAlt: 'Smiling Filipino employee checking leave balance and payslip on his phone',
+    problemLabel: 'Before: Waiting days for payslips & leave replies',
+    solutionBadge: 'With gemX: 24/7 answers right in your pocket',
+    quote: 'I checked my leave credits and filed my vacation request in thirty seconds while commuting—approved before I reached my desk.',
+    attribution: 'Team Member · Everyday Mobile Self-Service',
     headline: 'Everything Employees Need—Without Waiting on HR.',
     description:
       'Give every team member instant 24/7 access to their own records, balances, payslips, and requests from their phone or laptop.',
@@ -34,6 +41,12 @@ const AUDIENCES = {
   },
   managers: {
     label: 'For Managers',
+    photo: 'feature-self-service-manager' as PeoplePhotoSlug,
+    photoAlt: 'Approachable Filipino line manager in a navy polo approving team requests on his smartphone on an active operations floor',
+    problemLabel: 'Before: Buried in paper forms & email threads',
+    solutionBadge: 'Outcome: 1-tap team approvals right on the floor',
+    quote: 'Seeing who is on leave today and signing off on overtime takes one tap on my phone—no need to walk back to a desk.',
+    attribution: 'Manager Self-Service Outcome · 24-Person Operations Team',
     headline: 'Lead Your Team Without Getting Buried in Forms.',
     description:
       'Line managers and branch heads see what their team needs and complete approvals in seconds—without waiting for HR to prepare another spreadsheet.',
@@ -61,6 +74,12 @@ const AUDIENCES = {
   },
   leaders: {
     label: 'For HR Leaders',
+    photo: 'feature-self-service-leader' as PeoplePhotoSlug,
+    photoAlt: 'Inspiring Filipina Head of People leading a warm small-group culture conversation in a sunlit Manila office lounge',
+    problemLabel: 'Before: Answering repetitive balance inquiries all day',
+    solutionBadge: 'Outcome: 80% fewer tickets → More time for culture',
+    quote: 'When employees and managers have clear self-service tools, HR finally focuses on retention, culture, and people strategy.',
+    attribution: 'HR Leadership Outcome · Strategic People & Culture',
     headline: 'Reclaim 80% of Time Spent Answering Routine Questions.',
     description:
       'When employees and managers self-serve smoothly, HR shifts from chasing signatures to building culture, retention, and people strategy.',
@@ -145,7 +164,18 @@ export function SelfServicePage() {
               </ul>
             </div>
 
-            <UiMockupCard preview={active.preview} />
+            <div style={{ display: 'grid', gap: '1.15rem' }}>
+              <HumanStoryCard
+                priority
+                photo={active.photo}
+                alt={active.photoAlt}
+                problemLabel={active.problemLabel}
+                solutionBadge={active.solutionBadge}
+                quote={active.quote}
+                personAttribution={active.attribution}
+              />
+              <UiMockupCard preview={active.preview} />
+            </div>
           </div>
         </div>
       </section>

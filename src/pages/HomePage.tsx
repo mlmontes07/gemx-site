@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { CleanFaq } from '../components/CleanFaq';
 import { DemoFormCard } from '../components/DemoFormCard';
+import { HumanStoryCard } from '../components/HumanStoryCard';
 import { UiMockupCard } from '../components/UiMockupCard';
 import {
   HOME_GENERAL_FAQS,
@@ -69,11 +70,24 @@ export function HomePage() {
               ))}
             </ul>
 
+            {/* Human Trust & Relief Card (LCP Priority) */}
+            <div style={{ marginBlockStart: '1.75rem' }}>
+              <HumanStoryCard
+                variant="compact"
+                priority
+                photo="hr-director-hero"
+                alt="Smiling Filipina HR Director at a calm, clutter-free desk in a sunlit Manila office"
+                solutionBadge="Zero Cutoff Stress · 100% On-Time Paydays"
+                quote="Payday used to mean late nights double-checking spreadsheets. With gemX, our entire cutoff is accurate, compliant, and ready before lunch."
+                personAttribution="People & Payroll Lead · 380-Employee Philippine Enterprise"
+              />
+            </div>
+
             {/* Subtle Highlights Strip */}
             <div
               style={{
-                marginBlockStart: '2.25rem',
-                paddingBlockStart: '1.5rem',
+                marginBlockStart: '1.65rem',
+                paddingBlockStart: '1.35rem',
                 borderBlockStart: '1px solid var(--border-hairline)',
                 display: 'flex',
                 flexWrap: 'wrap',
@@ -121,7 +135,7 @@ export function HomePage() {
               }}
             />
 
-            <div className="feat-split">
+            <div className="feat-split" style={{ alignItems: 'start' }}>
               <div>
                 <p style={{ fontSize: '0.94rem', fontWeight: 600, color: 'var(--accent-ink)', marginBlockEnd: '1.1rem' }}>
                   What HR, Finance &amp; Business Leaders across the Philippines deal with every cutoff:
@@ -149,19 +163,29 @@ export function HomePage() {
                 </ul>
               </div>
 
-              <div className="callout-panel">
-                <span className="phr-eyebrow">From Spreadsheets to One System</span>
-                <h3 style={{ fontSize: '1.4rem', marginBlockEnd: '0.75rem' }}>
-                  Replace scattered spreadsheets and email chains with one calm, connected platform.
-                </h3>
-                <p style={{ fontSize: '0.94rem', marginBlockEnd: '1.35rem' }}>
-                  When Recruitment, 201 Files, Attendance, Leaves, Loans, Benefits, and Payroll share the same home,
-                  your team stops babysitting manual files and focuses on your people.
-                </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-                  <Link to="/roi-calculator" className="btn-secondary">
-                    Calculate Time Saved <ArrowRight size={15} aria-hidden="true" />
-                  </Link>
+              <div style={{ display: 'grid', gap: '1.15rem' }}>
+                <HumanStoryCard
+                  photo="home-cutoff-calm"
+                  alt="Three cheerful Filipino HR, Payroll, and Finance colleagues laughing together around a clutter-free standing desk in a sunlit Makati office"
+                  problemLabel="Before: 4 days chasing DTR & folders"
+                  solutionBadge="With gemX: One calm, connected cutoff"
+                  quote="When attendance, leaves, loans, and government tables talk to each other automatically, HR and Finance finally breathe easy."
+                  personAttribution="HR, Payroll & Finance Team · Philippine Operations"
+                />
+
+                <div className="callout-panel" style={{ padding: '1.35rem 1.5rem' }}>
+                  <span className="phr-eyebrow">From Spreadsheets to One System</span>
+                  <h3 style={{ fontSize: '1.25rem', marginBlockEnd: '0.55rem' }}>
+                    Replace scattered spreadsheets and email chains with one calm, connected platform.
+                  </h3>
+                  <p style={{ fontSize: '0.92rem', marginBlockEnd: '1rem' }}>
+                    Stop babysitting manual files so your team can focus on taking care of your people.
+                  </p>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                    <Link to="/roi-calculator" className="btn-secondary">
+                      Calculate Time Saved <ArrowRight size={15} aria-hidden="true" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -295,7 +319,7 @@ export function HomePage() {
             </p>
           </div>
 
-          <div className="feat-split">
+          <div className="feat-split" style={{ alignItems: 'start' }}>
             <div>
               <UiMockupCard
                 preview={{
@@ -343,7 +367,7 @@ export function HomePage() {
 
       {/* 6. HR IN YOUR POCKET */}
       <section className="phr-section phr-section--alt">
-        <div className="phr-container feat-split">
+        <div className="phr-container feat-split" style={{ alignItems: 'start' }}>
           <div>
             <span className="phr-eyebrow">
               <Smartphone size={14} aria-hidden="true" />
@@ -382,43 +406,102 @@ export function HomePage() {
             </div>
           </div>
 
-          <UiMockupCard
-            preview={{
-              eyebrow: 'Employee & Manager App',
-              title: 'Everyday Self-Service Shortcuts',
-              highlightLabel: 'Routine HR Tickets',
-              highlightValue: '-80%',
-              metrics: [
-                { label: 'Sign-In', value: 'Face / Fingerprint' },
-                { label: 'Availability', value: '24/7 Access' },
-              ],
-              items: [
-                {
-                  title: 'My Latest Payslip · Nov 15',
-                  subtitle: 'View breakdown or download PDF copy',
-                  status: 'Available',
-                  tone: 'mint',
-                },
-                {
-                  title: 'Vacation Leave Balance · 11.5 Days',
-                  subtitle: 'Submit request to supervisor in 2 taps',
-                  status: 'Instant',
-                  tone: 'sky',
-                },
-                {
-                  title: 'Manager Approval Inbox (3 Pending)',
-                  subtitle: 'Approve team leave & overtime on the go',
-                  status: '1-Tap Sign-Off',
-                  tone: 'violet',
-                },
-              ],
-            }}
-          />
+          <div style={{ display: 'grid', gap: '1.25rem' }}>
+            <HumanStoryCard
+              photo="home-mobile-field"
+              alt="Cheerful Filipina field coordinator checking her smartphone outdoors on a sunlit BGC corporate plaza walkway"
+              problemLabel="Before: Waiting days for HR replies"
+              solutionBadge="With gemX: Clock-in, leaves & payslips in 2 taps"
+              quote="Our field and office staff check leave balances, clock in on site, and download payslips right from their phones—routine HR tickets dropped overnight."
+              personAttribution="Field & Branch Experience · Nationwide Operations"
+            />
+
+            <UiMockupCard
+              preview={{
+                eyebrow: 'Employee & Manager App',
+                title: 'Everyday Self-Service Shortcuts',
+                highlightLabel: 'Routine HR Tickets',
+                highlightValue: '-80%',
+                metrics: [
+                  { label: 'Sign-In', value: 'Face / Fingerprint' },
+                  { label: 'Availability', value: '24/7 Access' },
+                ],
+                items: [
+                  {
+                    title: 'My Latest Payslip · Nov 15',
+                    subtitle: 'View breakdown or download PDF copy',
+                    status: 'Available',
+                    tone: 'mint',
+                  },
+                  {
+                    title: 'Vacation Leave Balance · 11.5 Days',
+                    subtitle: 'Submit request to supervisor in 2 taps',
+                    status: 'Instant',
+                    tone: 'sky',
+                  },
+                  {
+                    title: 'Manager Approval Inbox (3 Pending)',
+                    subtitle: 'Approve team leave & overtime on the go',
+                    status: '1-Tap Sign-Off',
+                    tone: 'violet',
+                  },
+                ],
+              }}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 6B. REAL PEOPLE, REAL HR HEADACHES SOLVED */}
+      <section className="phr-section">
+        <div className="phr-container">
+          <div className="phr-section-header">
+            <span className="phr-eyebrow">
+              <Sparkles size={14} aria-hidden="true" />
+              Built Around Real People
+            </span>
+            <h2 className="phr-h2">
+              Every HR Headache Has a <span className="cosmic-accent">Human Side—and a Clear Solution</span>.
+            </h2>
+            <p className="phr-lead">
+              Behind every late cutoff, missing form, or delayed approval is a person trying to do their best work. Here
+              is how gemX turns everyday workplace friction into calm confidence.
+            </p>
+          </div>
+
+          <div className="human-stories-grid">
+            <HumanStoryCard
+              photo="home-story-retail"
+              alt="Filipino store manager and cheerful retail associate reviewing their shift schedule together on a tablet inside a bright Manila boutique"
+              problemLabel="Problem: Last-minute shift & local holiday mix-ups"
+              solutionBadge="Solution: Live branch rosters & city holiday pay"
+              quote="Store managers publish clear shift schedules and approve swaps on a tablet, while city-specific holidays compute automatically on payday."
+              personAttribution="Multi-Branch Retail & Hospitality Teams"
+            />
+
+            <HumanStoryCard
+              photo="home-story-healthcare"
+              alt="Warm Filipina clinic administrator and healthcare staff member in teal scrubs smiling together at a modern Manila clinic reception"
+              problemLabel="Problem: Complex 24/7 shifts, ND & urgent LOAs"
+              solutionBadge="Solution: Effortless rotating shifts & fast HMO care"
+              quote="Night differentials, rest-day duty, and Hospital LOA requests run smoothly round the clock so our frontliners stay focused on patient care."
+              personAttribution="24/7 Clinics, Healthcare & Shift Operations"
+            />
+
+            <HumanStoryCard
+              photo="home-story-enterprise"
+              alt="Confident Filipino founder and Head of HR smiling together beside floor-to-ceiling windows overlooking the Manila skyline"
+              problemLabel="Problem: Outgrowing spreadsheets as headcount doubles"
+              solutionBadge="Solution: Audit-ready growth from 50 to 5,000+ staff"
+              quote="BIR 2316, SSS, PhilHealth, Pag-IBIG, and people analytics stay organized year-round as you open new branches across the country."
+              personAttribution="Founders & HR Leaders · Scaling Philippine Enterprises"
+            />
+          </div>
         </div>
       </section>
 
       {/* 7. GENERAL QUESTIONS & CLEAN CTA */}
-      <section className="phr-section">
+      <section className="phr-section phr-section--alt">
         <div className="phr-container" style={{ maxInlineSize: '52rem' }}>
           <div className="phr-section-header">
             <h2 className="phr-h2">General Questions</h2>
@@ -427,7 +510,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="phr-section phr-section--alt" style={{ textAlign: 'center' }}>
+      <section className="phr-section" style={{ textAlign: 'center' }}>
         <div className="phr-container" style={{ maxInlineSize: '44rem' }}>
           <h2 className="phr-h2">Scrolled this far? Let’s show you gemX tailored to your team.</h2>
           <p className="phr-lead" style={{ marginBlockEnd: '1.85rem' }}>

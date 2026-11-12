@@ -1,5 +1,6 @@
 import { Check, Sparkles } from 'lucide-react';
 import { DemoFormCard } from '../components/DemoFormCard';
+import { HumanStoryCard } from '../components/HumanStoryCard';
 
 export function RequestDemoPage() {
   return (
@@ -37,6 +38,17 @@ export function RequestDemoPage() {
                 </li>
               ))}
             </ul>
+            <div style={{ marginBlockStart: '1.85rem' }}>
+              <HumanStoryCard
+                variant="compact"
+                priority
+                photo="demo-advisory-specialist"
+                alt="Warm, approachable Filipino HR Advisory Specialist in a smart navy blazer ready to walk through your workflows"
+                solutionBadge="Friendly 1-on-1 Philippine HR Specialist"
+                quote="Tell us your biggest payroll or compliance headache—we will tailor the entire walkthrough to solve that exact workflow."
+                personAttribution="gemX Implementation & HR Advisory Team"
+              />
+            </div>
           </div>
 
           <DemoFormCard

@@ -594,6 +594,39 @@
     }
   }
 
+  /* Desktop Sign In Pill (-> hub.gemx.ph) */
+  .nv-signin-link {
+    display: none;
+    align-items: center;
+    gap: 0.35rem;
+    min-block-size: 2.55rem;
+    padding: 0.45rem 0.95rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--btn-sec-border);
+    background: var(--btn-sec-bg);
+    color: var(--btn-sec-text);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .nv-signin-link:hover {
+    background: var(--btn-sec-hover-bg);
+    border-color: var(--btn-sec-hover-border);
+    color: var(--btn-sec-hover-text);
+  }
+
+  @media (min-width: 64rem) {
+    .nv-signin-link {
+      display: inline-flex;
+    }
+  }
+
   /* Floating Mega Dropdown Card */
   .nv-dropdown-wrap {
     position: relative;
@@ -707,7 +740,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: clamp(2.25rem, 5vw, 3.75rem);
-    align-items: center;
+    align-items: start;
   }
 
   @media (min-width: 60rem) {
@@ -920,7 +953,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 2.25rem;
-    align-items: center;
+    align-items: start;
     padding: clamp(1.5rem, 3.5vw, 2.75rem);
   }
 
@@ -1083,5 +1116,172 @@
     font-weight: 600;
     font-size: 0.9375rem;
     color: var(--text-main);
+  }
+
+  /* Editorial Human Problem -> Solution Story Cards */
+  .human-story-card {
+    margin: 0;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-card);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-soft);
+    overflow: clip;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .human-story-media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: clip;
+    background: var(--bg-inset);
+  }
+
+  .human-story-media picture,
+  .human-story-media img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    transition: transform 420ms ease;
+  }
+
+  .human-story-card:hover .human-story-media img {
+    transform: scale(1.025);
+  }
+
+  .human-story-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(7, 17, 40, 0.78) 0%,
+      rgba(7, 17, 40, 0.22) 45%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .human-media-badges {
+    position: absolute;
+    inset-inline: 1rem;
+    inset-block-end: 0.9rem;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .human-problem-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.28rem 0.72rem;
+    border-radius: var(--radius-pill);
+    background: rgba(7, 17, 40, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(10px);
+    color: #e2e8f0;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .human-solution-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.28rem 0.75rem;
+    border-radius: var(--radius-pill);
+    background: var(--eyebrow-bg);
+    border: 1px solid var(--eyebrow-border);
+    color: var(--eyebrow-text);
+    font-size: 0.76rem;
+    font-weight: 700;
+  }
+
+  .human-solution-pill--overlay {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-color: rgba(254, 240, 138, 0.75);
+    color: #071128;
+    box-shadow: 0 6px 18px rgba(7, 17, 40, 0.35);
+  }
+
+  .human-story-caption {
+    padding: 1.2rem 1.35rem 1.3rem;
+    display: grid;
+    gap: 0.45rem;
+    margin-block-start: auto;
+  }
+
+  .human-story-quote {
+    font-size: 0.935rem;
+    line-height: 1.52;
+    color: var(--text-main);
+    font-weight: 500;
+  }
+
+  .human-attribution {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  /* Compact Horizontal Human Card (Hero / Demo Trust Strip) */
+  .human-compact-card {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.9rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-card);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-soft);
+  }
+
+  @media (min-width: 34rem) {
+    .human-compact-card {
+      grid-template-columns: 9.75rem 1fr;
+      padding: 0.85rem 1.1rem 0.85rem 0.85rem;
+    }
+  }
+
+  .human-compact-thumb {
+    aspect-ratio: 16 / 10;
+    border-radius: calc(var(--radius-md) - 0.25rem);
+    overflow: clip;
+    background: var(--bg-inset);
+  }
+
+  .human-compact-thumb picture,
+  .human-compact-thumb img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: center 18%;
+  }
+
+  .human-compact-body {
+    display: grid;
+    gap: 0.38rem;
+    justify-items: start;
+  }
+
+  .human-compact-quote {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: var(--text-main);
+    font-weight: 500;
+  }
+
+  .human-stories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1.5rem;
   }
 }

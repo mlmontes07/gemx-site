@@ -10,6 +10,12 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 # Copy application source & static assets and build optimized dist/
+ARG DOMAIN=gemx.ph
+ARG HUB_DOMAIN=hub.gemx.ph
+ARG HUB_URL=
+ENV DOMAIN=${DOMAIN}
+ENV HUB_DOMAIN=${HUB_DOMAIN}
+ENV HUB_URL=${HUB_URL}
 COPY index.html tsconfig.json vite.config.ts ./
 COPY public ./public
 COPY src ./src
@@ -20,9 +26,11 @@ RUN npm run build
 # =============================================================================
 FROM nginx:1.27-alpine AS production
 
-# Remove default Nginx site config and install SPA + caching config
+# Remove default Nginx site config and install SPA + caching config + runtime .env injector
 RUN rm -f /etc/nginx/conf.d/default.conf
 COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY docker/40-env-config.sh /docker-entrypoint.d/40-env-config.sh
+RUN chmod +x /docker-entrypoint.d/40-env-config.sh
 
 # Copy compiled static production bundle from builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html

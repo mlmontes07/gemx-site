@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { HUB_SIGN_IN_URL } from '../config/site';
 import { GemxLogo } from './GemxLogo';
 
 export function Footer() {
@@ -68,6 +69,7 @@ export function Footer() {
             <ul role="list" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: '0.5rem', fontSize: '0.88rem' }}>
               <li><Link to="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Philippines HRIS Overview</Link></li>
               <li><Link to="/roi-calculator" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>HR ROI &amp; Time Calculator</Link></li>
+              <li><a href={HUB_SIGN_IN_URL} style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Sign In to gemX Hub</a></li>
               <li><Link to="/request-demo" style={{ color: 'var(--accent-ink)', textDecoration: 'none', fontWeight: 600 }}>Request a Personalized Demo →</Link></li>
             </ul>
           </div>

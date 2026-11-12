@@ -1,6 +1,7 @@
 import { CSSProperties, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calculator } from 'lucide-react';
+import { HumanStoryCard } from '../components/HumanStoryCard';
 
 export function RoiCalculatorPage() {
   const [headcount, setHeadcount] = useState(300);
@@ -32,7 +33,7 @@ export function RoiCalculatorPage() {
           </div>
 
           <div className="space-card" style={{ padding: 'clamp(1.75rem, 4vw, 3rem)' }}>
-            <div className="feat-split">
+            <div className="feat-split" style={{ alignItems: 'start' }}>
               {/* Sliders */}
               <div>
                 <h2 style={{ fontSize: '1.35rem', marginBlockEnd: '1.5rem' }}>Your Organization Profile</h2>
@@ -117,6 +118,18 @@ export function RoiCalculatorPage() {
                     <span>12 locations</span>
                     <span>25+ locations</span>
                   </div>
+                </div>
+
+                <div style={{ marginBlockStart: '1.65rem' }}>
+                  <HumanStoryCard
+                    variant="compact"
+                    priority
+                    photo="roi-time-reclaimed"
+                    alt="Two happy Filipino HR professionals walking out of a modern Makati glass office lobby on time during golden sunset"
+                    solutionBadge={`Reclaim ~${monthlyHoursSaved} hrs/month`}
+                    quote="Those reclaimed hours mean your HR and Payroll teams walk out on time at 5:30 PM instead of spending cutoff nights fixing spreadsheet formulas."
+                    personAttribution="Tangible Outcome · On-Time Evenings Every Payday"
+                  />
                 </div>
               </div>
 
