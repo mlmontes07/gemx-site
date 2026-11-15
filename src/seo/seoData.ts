@@ -2,7 +2,9 @@ import {
   FaqEntry,
   HOME_GENERAL_FAQS,
   HOME_PAYROLL_ACCORDION,
+  MOBILE_SELF_SERVICE_FAQS,
   PRODUCT_PAGES,
+  WEB_SELF_SERVICE_FAQS,
 } from '../data/sitePagesData';
 
 export interface BreadcrumbItem {
@@ -194,26 +196,56 @@ export const ALL_SEO_ROUTES: Record<string, RouteSeoEntry> = {
     priority: '0.85',
   },
 
-  '/features/self-service': {
-    path: '/features/self-service',
-    title: 'Employee & Manager Mobile Self-Service HR App Philippines | gemX',
+  '/features/web-self-service': {
+    path: '/features/web-self-service',
+    title: 'Web Employee & Supervisor Self-Service Portal PH | gemX HRIS',
     description:
-      'Give Filipino employees & managers 24/7 mobile and web access to payslips, BIR 2316, leave balances, GPS selfie clock-in, overtime & 1-tap team approvals.',
+      'Explore the gemX Web Employee Portal: browser access to printable PDF payslips, BIR Form 2316, monthly DTR timesheets, digital 201 files, Time Keeper verification, My Team approvals, Org Chart, LMS & HMO LOAs.',
     keywords:
-      'employee self service portal Philippines, ESS HRIS app PH, mobile clock in payslip app Philippines, manager leave approval app',
-    ogImage: '/img/people/employee-mobile-pocket.jpg',
-    ogImageAlt: 'Smiling Filipino employee checking payslips and leave balances on his smartphone',
+      'web employee self service portal Philippines, browser ESS HRIS PH, online payslip BIR 2316 portal, supervisor my team timekeeper HRIS Philippines',
+    ogImage: '/img/people/feature-self-service-leader.jpg',
+    ogImageAlt: 'Filipina HR leader guiding teams through the gemX Web Employee & Supervisor Self-Service Portal',
     breadcrumbs: [
       { name: 'Home', path: '/' },
-      { name: 'Special Features', path: '/features/self-service' },
-      { name: 'Mobile & Web Self-Service', path: '/features/self-service' },
+      { name: 'Special Features', path: '/features/web-self-service' },
+      { name: 'Web Self-Service', path: '/features/web-self-service' },
     ],
     featureList: [
-      '24/7 PDF payslips, 13th month statements & BIR Form 2316 downloads',
-      'GPS location-verified clock-in with live selfie verification',
-      'Real-time Vacation & Sick Leave balances and 2-tap leave/OT filing',
-      'One-tap manager approvals and Face/Fingerprint passwordless sign-in',
+      'Browser Home Dashboard, Digital 201 Profile & My Documents Vault',
+      'Pay History PDF payslips, 13th month breakdowns, BIR Form 2316 & Loans/Advances ledger',
+      'Interactive monthly DTR Timesheet, Leave filing & Time Adjustment requests',
+      'My Team line manager approvals & dedicated Time Keeper attendance verification workspace',
+      'People Directory, Org Chart, My Assets, Code of Conduct, WorkPulse Task Board & Apps Hub',
+      'Goals/OKRs, 360-degree appraisals, LMS Courses, Benefits/HMO LOAs & Digital Wallet',
     ],
+    faqs: WEB_SELF_SERVICE_FAQS,
+    changefreq: 'monthly',
+    priority: '0.85',
+  },
+
+  '/features/mobile-self-service': {
+    path: '/features/mobile-self-service',
+    title: 'Mobile HR & Payroll Self-Service App (iOS & Android) PH | gemX',
+    description:
+      'Discover the native gemX Mobile App for iOS & Android: 8-mode GPS geofenced selfie clock-in, live shift donut timer, downloadable PDF payslips, Digital Wallet cash-outs, 2-tap leaves & 1-tap My Team approvals.',
+    keywords:
+      'mobile HR app Philippines, employee self service mobile app iOS Android PH, GPS selfie clock in app Philippines, mobile payslip and wallet cashout HRIS',
+    ogImage: '/img/people/employee-mobile-pocket.jpg',
+    ogImageAlt: 'Smiling Filipino employee checking payslips, leave credits, and attendance on the gemX Mobile App',
+    breadcrumbs: [
+      { name: 'Home', path: '/' },
+      { name: 'Special Features', path: '/features/mobile-self-service' },
+      { name: 'Mobile Self-Service', path: '/features/mobile-self-service' },
+    ],
+    featureList: [
+      'Dual-tab Shift & Financial Dashboard with live HH:MM:SS donut timer & Next Payday card',
+      '8-mode GPS geofenced & live front-camera selfie Punch Clock (Time In, Breaks, Lunch, Time Out)',
+      'Monthly Calendar Timesheet, Mobile WorkPulse task timer & 2-tap Leave filing with camera upload',
+      'Pay History PDF payslips, Compensation, Deductions, Loans/Advances & Digital Wallet cash-out',
+      'Personal Data (201), Documents Vault, People Directory, Org Chart, My Assets & Hospital LOAs',
+      'Floor-ready My Team approvals, Face ID / Fingerprint Passkeys & 1-scan QR onboarding',
+    ],
+    faqs: MOBILE_SELF_SERVICE_FAQS,
     changefreq: 'monthly',
     priority: '0.85',
   },
@@ -372,13 +404,20 @@ export function buildJsonLdGraph(entry: RouteSeoEntry, siteDomain: string): Reco
   ];
 
   if (entry.featureList && entry.featureList.length > 0) {
+    const operatingSystem =
+      entry.path === '/features/web-self-service'
+        ? 'Web'
+        : entry.path === '/features/mobile-self-service'
+          ? 'iOS, Android'
+          : 'Web, iOS, Android';
+
     graph.push({
       '@type': 'SoftwareApplication',
       '@id': `${canonicalUrl}#software`,
       name: entry.path === '/' ? 'gemX All-in-One Philippine HRIS & Payroll' : entry.title.split('|')[0].trim(),
       applicationCategory: 'BusinessApplication',
       applicationSubCategory: 'Human Resources & Payroll Software',
-      operatingSystem: 'Web, iOS, Android',
+      operatingSystem,
       url: canonicalUrl,
       image: imageUrl,
       description: entry.description,

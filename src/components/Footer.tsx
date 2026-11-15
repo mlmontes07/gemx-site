@@ -54,8 +54,9 @@ export function Footer() {
               Special Features
             </h2>
             <ul role="list" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: '0.5rem', fontSize: '0.88rem' }}>
+              <li><Link to="/features/web-self-service" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Web Self-Service</Link></li>
+              <li><Link to="/features/mobile-self-service" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Mobile Self-Service</Link></li>
               <li><Link to="/features/multi-company" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Multi-Company &amp; Branches</Link></li>
-              <li><Link to="/features/self-service" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Mobile &amp; Web Self-Service</Link></li>
               <li><Link to="/features/workpulse" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>WorkPulse Hybrid Insights</Link></li>
               <li><Link to="/features/salary-payouts" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Instant Salary Payouts</Link></li>
             </ul>

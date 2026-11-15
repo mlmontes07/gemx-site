@@ -1209,3 +1209,49 @@ export const PRODUCT_PAGES: Record<string, ProductPageConfig> = {
     nextLabel: 'Core HR & 201 Files',
   },
 };
+
+export const WEB_SELF_SERVICE_FAQS: FaqEntry[] = [
+  {
+    question: 'Do employees need to install anything to use the Web Self-Service Portal?',
+    answer:
+      'No. Employees, supervisors, and time keepers sign in from any modern desktop, laptop, or tablet browser at your company’s gemX Hub URL—complete with Passkey and optional two-step verification.',
+  },
+  {
+    question: 'What can line managers and designated Time Keepers do inside the Web Portal?',
+    answer:
+      'Line managers get the My Team hub to monitor live team attendance and approve leaves, overtime, cash advances, and time adjustments with supervisor remarks. Designated Time Keepers get a dedicated verification grid to reconcile biometric logs, shift schedules, rest days, and local holidays before payroll lock.',
+  },
+  {
+    question: 'Can employees download official PDF payslips and BIR Form 2316 directly from the browser?',
+    answer:
+      'Yes. Itemized semi-monthly or monthly PDF payslips, 13th month statements, loan ledgers, and digitally signed BIR Form 2316 certificates are available 24/7 for immediate viewing and printing.',
+  },
+  {
+    question: 'How does the Web Portal protect sensitive salary data across departments and sister companies?',
+    answer:
+      'Every sidebar module is governed by granular role-based ACL permissions and strict multi-tenant company isolation—ensuring employees only ever see their own confidential records and each sister company maintains separate branding and data.',
+  },
+];
+
+export const MOBILE_SELF_SERVICE_FAQS: FaqEntry[] = [
+  {
+    question: 'How do employees set up and connect the gemX Mobile App on iOS and Android?',
+    answer:
+      'Employees simply download the app and scan their personalized setup QR code inside the Web Portal’s Desktop & Mobile Apps Hub—automatically configuring their company server URL, username, and tenant brand theme in seconds.',
+  },
+  {
+    question: 'How does the Mobile App prevent buddy-punching or fake GPS attendance?',
+    answer:
+      'The 8-mode Punch Clock validates live GPS coordinates against approved branch geofence radii and captures a live front-camera verification selfie stamped onto each attendance log.',
+  },
+  {
+    question: 'Can employees cash out their salary payouts directly from the gemX Mobile App?',
+    answer:
+      'Yes. When Digital Wallet payouts are enabled, employees can check their available PHP balance, review transparent transfer fees, and cash out directly to Maya, PayMongo, or linked bank accounts.',
+  },
+  {
+    question: 'What happens if an employee loses their phone or resigns from the company?',
+    answer:
+      'Sign-in is protected by device biometrics—Face ID or Fingerprint Passkeys—paired with encrypted JWT sessions. HR can revoke device access immediately or automatically upon exit clearance.',
+  },
+];

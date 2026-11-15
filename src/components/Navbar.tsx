@@ -11,6 +11,7 @@ import {
   Laptop,
   LogIn,
   Menu,
+  Monitor,
   Moon,
   PhilippinePeso,
   Smartphone,
@@ -64,16 +65,22 @@ const PRODUCT_NAV_ITEMS = [
 
 const SPECIAL_FEATURES_ITEMS = [
   {
+    to: '/features/web-self-service',
+    icon: Monitor,
+    title: 'Web Self-Service',
+    desc: 'Full browser employee & supervisor portal',
+  },
+  {
+    to: '/features/mobile-self-service',
+    icon: Smartphone,
+    title: 'Mobile Self-Service',
+    desc: 'Native iOS & Android HR in your pocket',
+  },
+  {
     to: '/features/multi-company',
     icon: Building2,
     title: 'Multi-Company & Branches',
     desc: 'Sister companies, branches & custom themes',
-  },
-  {
-    to: '/features/self-service',
-    icon: Smartphone,
-    title: 'Mobile & Web Self-Service',
-    desc: 'HR in every employee & manager’s pocket',
   },
   {
     to: '/features/workpulse',
@@ -145,7 +152,7 @@ export function Navbar() {
             <li className="nv-dropdown-wrap">
               <button
                 type="button"
-                className="nv-link"
+                className={`nv-link${location.pathname.startsWith('/products/') ? ' active' : ''}`}
                 aria-expanded={openMenu === 'products'}
                 onClick={() => setOpenMenu((prev) => (prev === 'products' ? null : 'products'))}
               >
@@ -182,24 +189,39 @@ export function Navbar() {
 
                   <div className="nv-mega-foot">
                     <p style={{ fontSize: '0.85rem', color: 'var(--text-body)' }}>
-                      <strong style={{ color: 'var(--text-main)' }}>HR in Your Pocket — </strong>
-                      Self-service for every employee and manager.
+                      <strong style={{ color: 'var(--text-main)' }}>HR Anywhere — </strong>
+                      Dedicated self-service on desktop browsers &amp; phones.
                     </p>
-                    <Link
-                      to="/features/self-service"
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '0.35rem',
-                        fontSize: '0.85rem',
-                        fontWeight: 600,
-                        color: 'var(--accent-sky)',
-                        textDecoration: 'none',
-                        flexShrink: 0,
-                      }}
-                    >
-                      Explore Mobile HR <ArrowRight size={14} aria-hidden="true" />
-                    </Link>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem', flexShrink: 0 }}>
+                      <Link
+                        to="/features/web-self-service"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.3rem',
+                          fontSize: '0.85rem',
+                          fontWeight: 600,
+                          color: 'var(--accent-sky)',
+                          textDecoration: 'none',
+                        }}
+                      >
+                        Web Portal <ArrowRight size={14} aria-hidden="true" />
+                      </Link>
+                      <Link
+                        to="/features/mobile-self-service"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.3rem',
+                          fontSize: '0.85rem',
+                          fontWeight: 600,
+                          color: 'var(--accent-sky)',
+                          textDecoration: 'none',
+                        }}
+                      >
+                        Mobile App <ArrowRight size={14} aria-hidden="true" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               )}
@@ -208,7 +230,7 @@ export function Navbar() {
             <li className="nv-dropdown-wrap">
               <button
                 type="button"
-                className="nv-link"
+                className={`nv-link${location.pathname.startsWith('/features/') ? ' active' : ''}`}
                 aria-expanded={openMenu === 'features'}
                 onClick={() => setOpenMenu((prev) => (prev === 'features' ? null : 'features'))}
               >
@@ -224,7 +246,7 @@ export function Navbar() {
               </button>
 
               {openMenu === 'features' && (
-                <div className="nv-mega-card" style={{ inlineSize: 'min(92vw, 38rem)' }}>
+                <div className="nv-mega-card" style={{ inlineSize: 'min(92vw, 42rem)' }}>
                   <div className="nv-mega-grid">
                     {SPECIAL_FEATURES_ITEMS.map(({ to, icon: Icon, title, desc }) => (
                       <Link key={to} to={to} className="nv-tile">
@@ -241,6 +263,28 @@ export function Navbar() {
                         </span>
                       </Link>
                     ))}
+                  </div>
+
+                  <div className="nv-mega-foot">
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-body)' }}>
+                      <strong style={{ color: 'var(--text-main)' }}>Quantify Your Impact — </strong>
+                      Estimate monthly HR &amp; payroll hours saved for your headcount.
+                    </p>
+                    <Link
+                      to="/roi-calculator"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.35rem',
+                        fontSize: '0.85rem',
+                        fontWeight: 600,
+                        color: 'var(--accent-sky)',
+                        textDecoration: 'none',
+                        flexShrink: 0,
+                      }}
+                    >
+                      Calculate Time Saved <ArrowRight size={14} aria-hidden="true" />
+                    </Link>
                   </div>
                 </div>
               )}

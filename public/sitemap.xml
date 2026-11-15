@@ -90,14 +90,25 @@
     </image:image>
   </url>
   <url>
-    <loc>https://gemx.ph/features/self-service</loc>
+    <loc>https://gemx.ph/features/web-self-service</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/feature-self-service-leader.jpg</image:loc>
+      <image:title>Web Employee &amp; Supervisor Self-Service Portal PH | gemX HRIS</image:title>
+      <image:caption>Filipina HR leader guiding teams through the gemX Web Employee &amp; Supervisor Self-Service Portal</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/features/mobile-self-service</loc>
     <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://gemx.ph/img/people/employee-mobile-pocket.jpg</image:loc>
-      <image:title>Employee &amp; Manager Mobile Self-Service HR App Philippines | gemX</image:title>
-      <image:caption>Smiling Filipino employee checking payslips and leave balances on his smartphone</image:caption>
+      <image:title>Mobile HR &amp; Payroll Self-Service App (iOS &amp; Android) PH | gemX</image:title>
+      <image:caption>Smiling Filipino employee checking payslips, leave credits, and attendance on the gemX Mobile App</image:caption>
     </image:image>
   </url>
   <url>

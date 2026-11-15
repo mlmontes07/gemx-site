@@ -397,11 +397,11 @@ export function HomePage() {
             </ul>
 
             <div style={{ marginBlockStart: '1.75rem', display: 'flex', flexWrap: 'wrap', gap: '0.85rem' }}>
-              <Link to="/features/self-service" className="btn-primary">
-                Explore Self-Service Experience <ArrowRight size={16} aria-hidden="true" />
+              <Link to="/features/mobile-self-service" className="btn-primary">
+                Explore Mobile App <ArrowRight size={16} aria-hidden="true" />
               </Link>
-              <Link to="/features/multi-company" className="btn-secondary">
-                Multi-Company Groups →
+              <Link to="/features/web-self-service" className="btn-secondary">
+                Explore Web Employee Portal →
               </Link>
             </div>
           </div>
