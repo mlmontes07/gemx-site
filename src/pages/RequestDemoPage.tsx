@@ -1,4 +1,4 @@
-import { Check, Sparkles } from 'lucide-react';
+import { CalendarCheck, Check } from 'lucide-react';
 import { DemoFormCard } from '../components/DemoFormCard';
 import { HumanStoryCard } from '../components/HumanStoryCard';
 
@@ -9,7 +9,7 @@ export function RequestDemoPage() {
         <div className="phr-container hero-split">
           <div>
             <span className="phr-eyebrow">
-              <Sparkles size={14} aria-hidden="true" />
+              <CalendarCheck size={14} aria-hidden="true" />
               Personalized Walkthrough
             </span>
             <h1 className="phr-h1">

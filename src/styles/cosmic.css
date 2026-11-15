@@ -1284,4 +1284,47 @@
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
     gap: 1.5rem;
   }
+
+  /* Accessible SEO Breadcrumb Trail (Inner Pages) */
+  .seo-breadcrumbs {
+    padding-block: 0.85rem 0;
+  }
+
+  .seo-breadcrumbs-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+
+  .seo-breadcrumbs-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .seo-breadcrumbs-sep {
+    opacity: 0.65;
+  }
+
+  .seo-breadcrumbs-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .seo-breadcrumbs-link:hover {
+    color: var(--accent-ink);
+    text-decoration: underline;
+  }
+
+  .seo-breadcrumbs-current {
+    color: var(--text-main);
+    font-weight: 600;
+  }
 }

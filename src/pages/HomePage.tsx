@@ -8,10 +8,10 @@ import {
   Check,
   Clock,
   HeartHandshake,
+  Layers,
   PhilippinePeso,
   ShieldCheck,
   Smartphone,
-  Sparkles,
   Users,
 } from 'lucide-react';
 import { CleanFaq } from '../components/CleanFaq';
@@ -45,7 +45,7 @@ export function HomePage() {
         <div className="phr-container hero-split">
           <div>
             <span className="phr-eyebrow">
-              <Sparkles size={14} aria-hidden="true" />
+              <Layers size={14} aria-hidden="true" />
               All-in-One Philippines HRIS &amp; Payroll
             </span>
 
@@ -194,7 +194,7 @@ export function HomePage() {
       </section>
 
       {/* 3. THRIVE WITH OUR ALL-IN-ONE HRIS (Clean 6-Module Tabs) */}
-      <section className="phr-section">
+      <section id="products" className="phr-section">
         <div className="phr-container">
           <div className="phr-section-header">
             <h2 className="phr-h2">
@@ -457,7 +457,7 @@ export function HomePage() {
         <div className="phr-container">
           <div className="phr-section-header">
             <span className="phr-eyebrow">
-              <Sparkles size={14} aria-hidden="true" />
+              <Users size={14} aria-hidden="true" />
               Built Around Real People
             </span>
             <h2 className="phr-h2">

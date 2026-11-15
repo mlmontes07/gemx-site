@@ -34,24 +34,22 @@ export function CleanFaq({ items, defaultOpenIndex = 0 }: CleanFaqProps) {
                 </span>
               </button>
             </h3>
-            {isOpen && (
-              <div
-                id={panelId}
-                role="region"
-                aria-labelledby={btnId}
-                style={{
-                  padding: '0 1.35rem 1.2rem 1.35rem',
-                  fontSize: '0.94rem',
-                  color: 'var(--text-body)',
-                }}
-              >
-                <p>{item.answer}</p>
-              </div>
-            )}
+            <div
+              id={panelId}
+              role="region"
+              aria-labelledby={btnId}
+              hidden={!isOpen}
+              style={{
+                padding: '0 1.35rem 1.2rem 1.35rem',
+                fontSize: '0.94rem',
+                color: 'var(--text-body)',
+              }}
+            >
+              <p>{item.answer}</p>
+            </div>
           </div>
         );
       })}
     </div>
   );
 }
-

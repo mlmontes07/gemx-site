@@ -1,4 +1,4 @@
-import { CheckCircle2, Sparkles } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 export type PeoplePhotoSlug =
   | 'hr-director-hero'
@@ -102,7 +102,7 @@ export function HumanStoryCard({
         <div className="human-media-badges">
           {problemLabel && <span className="human-problem-pill">{problemLabel}</span>}
           <span className="human-solution-pill human-solution-pill--overlay">
-            <Sparkles size={13} aria-hidden="true" />
+            <CheckCircle2 size={13} aria-hidden="true" />
             {solutionBadge}
           </span>
         </div>

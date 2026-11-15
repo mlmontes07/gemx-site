@@ -1,4 +1,4 @@
-import { Sparkles } from 'lucide-react';
+import { LayoutDashboard } from 'lucide-react';
 import { MockupPreview } from '../data/sitePagesData';
 
 export function UiMockupCard({ preview }: { preview: MockupPreview }) {
@@ -33,7 +33,7 @@ export function UiMockupCard({ preview }: { preview: MockupPreview }) {
               marginBlockEnd: '0.2rem',
             }}
           >
-            <Sparkles size={13} aria-hidden="true" />
+            <LayoutDashboard size={13} aria-hidden="true" />
             {preview.eyebrow}
           </span>
           <h4 style={{ fontSize: '1.08rem', fontWeight: 700 }}>{preview.title}</h4>

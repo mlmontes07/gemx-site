@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://gemx.ph/</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/hr-director-hero.jpg</image:loc>
+      <image:title>gemX | All-in-One HRIS &amp; Payroll Software in the Philippines</image:title>
+      <image:caption>Smiling Filipina HR Director running stress-free Philippine payroll and HRIS on gemX</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/products/core-hr</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/product-core-hr.jpg</image:loc>
+      <image:title>Core HR &amp; Digital 201 Files Software Philippines | gemX HRIS</image:title>
+      <image:caption>Filipina HR specialist reviewing paperless digital 201 employee records on a tablet</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/products/payroll</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/payroll-relief-story.jpg</image:loc>
+      <image:title>Philippine Payroll Software (BIR 2316, SSS, PhilHealth, Pag-IBIG) | gemX</image:title>
+      <image:caption>Filipino HR and Finance specialists celebrating an accurate, on-time payroll cutoff with gemX</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/products/time-attendance</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/product-time-attendance.jpg</image:loc>
+      <image:title>Biometric Time &amp; Attendance, Shift &amp; Leave Software PH | gemX</image:title>
+      <image:caption>Filipino employee clocking in seamlessly at a contactless wall biometric terminal in a Makati office</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/products/recruitment</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/product-recruitment.jpg</image:loc>
+      <image:title>Recruitment ATS &amp; Paperless Onboarding Software Philippines | gemX</image:title>
+      <image:caption>Filipina Talent Partner welcoming a smiling new hire on Day One with badge and laptop ready</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/products/talent-learning</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/manager-team-coaching.jpg</image:loc>
+      <image:title>Performance Management, 360° Reviews &amp; LMS Philippines | gemX</image:title>
+      <image:caption>Filipina team manager coaching a team member on career growth and performance goals</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/products/benefits-assets</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/product-benefits-assets.jpg</image:loc>
+      <image:title>Employee Benefits, HMO LOA, Asset &amp; DOLE Relations Software | gemX</image:title>
+      <image:caption>Workplace officer handing over a tracked company laptop and headset to a smiling Filipina employee</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/features/multi-company</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/executive-multicompany.jpg</image:loc>
+      <image:title>Multi-Company &amp; Multi-Branch HRIS for Philippine Groups | gemX</image:title>
+      <image:caption>Filipino group executives reviewing sister-company workforce insights in a Manila boardroom</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/features/self-service</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/employee-mobile-pocket.jpg</image:loc>
+      <image:title>Employee &amp; Manager Mobile Self-Service HR App Philippines | gemX</image:title>
+      <image:caption>Smiling Filipino employee checking payslips and leave balances on his smartphone</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/features/workpulse</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/feature-workpulse.jpg</image:loc>
+      <image:title>WorkPulse Hybrid &amp; WFH Time Tracking &amp; Productivity PH | gemX</image:title>
+      <image:caption>Filipina remote professional working happily from a sunlit Manila home office</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/features/salary-payouts</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/feature-salary-payouts.jpg</image:loc>
+      <image:title>Instant Payroll Disbursement (Maya, PayMongo &amp; PH Banks) | gemX</image:title>
+      <image:caption>Two Filipino coworkers smiling over iced coffee as instant payday wallet notifications arrive</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/roi-calculator</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/roi-time-reclaimed.jpg</image:loc>
+      <image:title>HRIS &amp; Payroll ROI &amp; Time-Savings Calculator Philippines | gemX</image:title>
+      <image:caption>Two happy Filipino HR professionals leaving their Makati office on time at sunset</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://gemx.ph/request-demo</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://gemx.ph/img/people/demo-advisory-specialist.jpg</image:loc>
+      <image:title>Book a Free Live Demo | gemX Philippine HRIS &amp; Payroll</image:title>
+      <image:caption>Friendly Filipino HR Advisory Specialist ready to walk through your payroll and HR workflows</image:caption>
+    </image:image>
+  </url>
+</urlset>

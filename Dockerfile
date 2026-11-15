@@ -17,6 +17,7 @@ ENV DOMAIN=${DOMAIN}
 ENV HUB_DOMAIN=${HUB_DOMAIN}
 ENV HUB_URL=${HUB_URL}
 COPY index.html tsconfig.json vite.config.ts ./
+COPY scripts ./scripts
 COPY public ./public
 COPY src ./src
 RUN npm run build
