@@ -25,7 +25,7 @@ export function Footer() {
           {/* Brand */}
           <div>
             <Link to="/" className="nv-brand" style={{ marginBlockEnd: '0.85rem' }} aria-label="gemX Home">
-              <GemxLogo height={52} />
+              <GemxLogo height={52} lazy />
             </Link>
             <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', maxInlineSize: '30ch' }}>
               Your all-in-one HRIS and payroll platform, thoughtfully built for Philippine compliance and growing

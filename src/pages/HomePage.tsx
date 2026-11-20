@@ -23,7 +23,7 @@ import {
   HOME_MODULE_TABS,
   HOME_PAYROLL_ACCORDION,
   HOME_PROBLEMS_WE_FIX,
-} from '../data/sitePagesData';
+} from '../data/homeData';
 
 const TAB_ICONS: Record<string, typeof Users> = {
   hr: Users,
@@ -472,6 +472,7 @@ export function HomePage() {
           <div className="human-stories-grid">
             <HumanStoryCard
               photo="home-story-retail"
+              gridColumns={3}
               alt="Filipino store manager and cheerful retail associate reviewing their shift schedule together on a tablet inside a bright Manila boutique"
               problemLabel="Problem: Last-minute shift & local holiday mix-ups"
               solutionBadge="Solution: Live branch rosters & city holiday pay"
@@ -481,6 +482,7 @@ export function HomePage() {
 
             <HumanStoryCard
               photo="home-story-healthcare"
+              gridColumns={3}
               alt="Warm Filipina clinic administrator and healthcare staff member in teal scrubs smiling together at a modern Manila clinic reception"
               problemLabel="Problem: Complex 24/7 shifts, ND & urgent LOAs"
               solutionBadge="Solution: Effortless rotating shifts & fast HMO care"
@@ -490,6 +492,7 @@ export function HomePage() {
 
             <HumanStoryCard
               photo="home-story-enterprise"
+              gridColumns={3}
               alt="Confident Filipino founder and Head of HR smiling together beside floor-to-ceiling windows overlooking the Manila skyline"
               problemLabel="Problem: Outgrowing spreadsheets as headcount doubles"
               solutionBadge="Solution: Audit-ready growth from 50 to 5,000+ staff"

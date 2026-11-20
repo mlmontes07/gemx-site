@@ -40,14 +40,20 @@ function readInitialMode(): ThemeMode {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [mode, setModeState] = useState<ThemeMode>(readInitialMode);
-  const [isDaytimeNow, setIsDaytimeNow] = useState<boolean>(getDaytimeByClock);
+  // Initialize deterministically so SSR HTML and initial client hydration match 100%
+  const [mode, setModeState] = useState<ThemeMode>('auto');
+  const [isDaytimeNow, setIsDaytimeNow] = useState<boolean>(true);
+  const [hasSynced, setHasSynced] = useState<boolean>(false);
 
   const resolvedTheme: ResolvedTheme =
     mode === 'auto' ? (isDaytimeNow ? 'light' : 'dark') : mode;
 
-  // Automatically re-check the local time of day every 30s and when tab regains focus
+  // Sync actual clock & session preference after hydration, then re-check every 30s
   useEffect(() => {
+    setModeState(readInitialMode());
+    setIsDaytimeNow(getDaytimeByClock());
+    setHasSynced(true);
+
     const syncClock = () => {
       setIsDaytimeNow(getDaytimeByClock());
     };
@@ -68,6 +74,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   // Apply resolved theme to <html data-theme="...">, <meta name="color-scheme">, and <meta name="theme-color">
   useEffect(() => {
+    if (!hasSynced) return;
+
     document.documentElement.dataset.theme = resolvedTheme;
 
     const csMeta = document.querySelector<HTMLMetaElement>('meta[name="color-scheme"]');
@@ -79,7 +87,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     if (tcMeta) {
       tcMeta.content = resolvedTheme === 'dark' ? '#071128' : '#FAF8F5';
     }
-  }, [resolvedTheme]);
+  }, [resolvedTheme, hasSynced]);
 
   const setMode = (next: ThemeMode) => {
     setModeState(next);

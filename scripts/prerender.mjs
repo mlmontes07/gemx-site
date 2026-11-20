@@ -2,12 +2,15 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import zlib from 'node:zlib';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const ssrDir = path.join(rootDir, 'dist-ssr');
 const publicDir = path.join(rootDir, 'public');
+const COMPACT_LCP_ROUTES = new Set(['/', '/roi-calculator', '/request-demo']);
+const GZIP_EXTENSIONS = new Set(['.html', '.js', '.css', '.svg', '.xml', '.txt', '.webmanifest']);
 
 function readEnvDomain() {
   if (process.env.DOMAIN && process.env.DOMAIN.trim()) {
@@ -38,11 +41,106 @@ function escapeXml(str) {
   return escapeHtml(str).replace(/'/g, '&apos;');
 }
 
-function buildHeadBlock(entry, siteDomain, buildJsonLdGraph) {
+function buildLcpPreloadTag(entry) {
+  const match = entry.ogImage.match(/\/img\/people\/([^/]+)\.jpg$/i);
+  if (!match) return '';
+  const slug = match[1];
+  const isCompact = COMPACT_LCP_ROUTES.has(entry.path);
+  const srcSet = isCompact
+    ? `/img/people/${slug}-240.webp 240w, /img/people/${slug}-384.webp 384w, /img/people/${slug}-520.webp 520w, /img/people/${slug}-640.webp 640w, /img/people/${slug}-800.webp 800w`
+    : `/img/people/${slug}-240.webp 240w, /img/people/${slug}-384.webp 384w, /img/people/${slug}-520.webp 520w, /img/people/${slug}-640.webp 640w, /img/people/${slug}-800.webp 800w, /img/people/${slug}-1280.webp 1280w`;
+  const sizes = isCompact
+    ? '(max-width: 34rem) 68vw, 9.75rem'
+    : '(max-width: 58rem) 64vw, (max-width: 78rem) 38vw, 31.8rem';
+
+  return `<link rel="preload" as="image" type="image/webp" imagesrcset="${escapeHtml(srcSet)}" imagesizes="${escapeHtml(sizes)}" fetchpriority="high" />`;
+}
+
+function inlineEntryCssAndStripExtraPreloads(html) {
+  let out = html.replace(/<link\s+rel="modulepreload"[^>]*>\s*/gi, '');
+
+  const cssLinkMatch = out.match(/<link rel="stylesheet"[^>]*href="(\/assets\/index-[^"]+\.css)"[^>]*>/);
+  if (cssLinkMatch) {
+    const cssRelPath = cssLinkMatch[1].replace(/^\/+/, '');
+    const cssFilePath = path.join(distDir, cssRelPath);
+    if (fs.existsSync(cssFilePath)) {
+      const cssContent = fs.readFileSync(cssFilePath, 'utf8').replace(/<\/style/gi, '<\\/style');
+      out = out.replace(cssLinkMatch[0], () => `<style id="gemx-inline-css">${cssContent}</style>`);
+    }
+  }
+
+  const bodyScripts = [];
+  const envScriptRe = /\s*<script[^>]*src="\/env-config\.js"[^>]*><\/script>\s*\n?/g;
+  out = out.replace(envScriptRe, (m) => {
+    bodyScripts.push(m.trim());
+    return '\n';
+  });
+
+  let entrySrc = '';
+  const entryScriptRe = /\s*<script\b[^>]*type="module"[^>]*src="(\/assets\/index-[^"]+\.js)"[^>]*><\/script>\s*\n?/i;
+  out = out.replace(entryScriptRe, (_, src) => {
+    entrySrc = src;
+    return '\n';
+  });
+
+  if (entrySrc) {
+    bodyScripts.push(
+      [
+        '<script>',
+        '      (function () {',
+        '        var booted = false;',
+        '        function boot() {',
+        '          if (booted) return;',
+        '          booted = true;',
+        `          import(${JSON.stringify(entrySrc)});`,
+        '        }',
+        "        ['pointerdown', 'keydown', 'touchstart', 'focusin'].forEach(function (ev) {",
+        '          window.addEventListener(ev, boot, { once: true, passive: true });',
+        '        });',
+        '        function schedule() {',
+        '          requestAnimationFrame(function () {',
+        '            setTimeout(boot, 120);',
+        '          });',
+        '        }',
+        "        if (document.readyState === 'complete') {",
+        '          schedule();',
+        '        } else {',
+        "          window.addEventListener('load', schedule, { once: true });",
+        '        }',
+        '      })();',
+        '    </script>',
+      ].join('\n'),
+    );
+  }
+
+  if (bodyScripts.length > 0) {
+    const footerScripts = bodyScripts.map((tag) => `    ${tag}`).join('\n');
+    out = out.replace('</body>', () => `${footerScripts}\n  </body>`);
+  }
+
+  return out;
+}
+
+function precompressDistFiles(dir) {
+  let count = 0;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      count += precompressDistFiles(fullPath);
+    } else if (entry.isFile() && GZIP_EXTENSIONS.has(path.extname(entry.name).toLowerCase())) {
+      const raw = fs.readFileSync(fullPath);
+      const gz = zlib.gzipSync(raw, { level: 9 });
+      fs.writeFileSync(`${fullPath}.gz`, gz);
+      count += 1;
+    }
+  }
+  return count;
+}
+
+function buildHeadBlock(entry, siteDomain) {
   const baseUrl = `https://${siteDomain}`;
   const canonicalUrl = entry.path === '/' ? `${baseUrl}/` : `${baseUrl}${entry.path}`;
   const ogImageUrl = `${baseUrl}${entry.ogImage}`;
-  const jsonLd = JSON.stringify(buildJsonLdGraph(entry, siteDomain)).replace(/</g, '\\u003c');
 
   return [
     '<!-- SEO_HEAD_START -->',
@@ -71,7 +169,6 @@ function buildHeadBlock(entry, siteDomain, buildJsonLdGraph) {
     `    <meta name="twitter:description" content="${escapeHtml(entry.description)}" />`,
     `    <meta name="twitter:image" content="${escapeHtml(ogImageUrl)}" />`,
     `    <meta name="twitter:image:alt" content="${escapeHtml(entry.ogImageAlt)}" />`,
-    `    <script id="gemx-schema-ld" type="application/ld+json">${jsonLd}</script>`,
     '    <!-- SEO_HEAD_END -->',
   ].join('\n');
 }
@@ -95,16 +192,22 @@ async function run() {
     const ssrModuleUrl = pathToFileURL(path.join(ssrDir, 'entry-server.js')).href;
     const { ALL_SEO_ROUTES, buildJsonLdGraph, renderRouteHtml } = await import(ssrModuleUrl);
 
-    const templateHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
+    const rawTemplateHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
+    const templateHtml = inlineEntryCssAndStripExtraPreloads(rawTemplateHtml);
     const routes = Object.values(ALL_SEO_ROUTES);
 
     for (const entry of routes) {
       const appHtml = renderRouteHtml(entry.path);
-      const headBlock = buildHeadBlock(entry, siteDomain, buildJsonLdGraph);
+      const headBlock = buildHeadBlock(entry, siteDomain);
+      const lcpPreloadTag = buildLcpPreloadTag(entry);
+      const jsonLd = JSON.stringify(buildJsonLdGraph(entry, siteDomain)).replace(/</g, '\\u003c');
+      const ldScript = `    <script id="gemx-schema-ld" type="application/ld+json">${jsonLd}</script>`;
 
       const pageHtml = templateHtml
-        .replace(/<!-- SEO_HEAD_START -->[\s\S]*?<!-- SEO_HEAD_END -->/, headBlock)
-        .replace('<!-- SSR_OUTLET -->', appHtml);
+        .replace('<!-- LCP_PRELOAD -->', () => lcpPreloadTag)
+        .replace(/<!-- SEO_HEAD_START -->[\s\S]*?<!-- SEO_HEAD_END -->/, () => headBlock)
+        .replace('<!-- SSR_OUTLET -->', () => appHtml)
+        .replace('</body>', () => `${ldScript}\n  </body>`);
 
       const outFile =
         entry.path === '/'
@@ -175,7 +278,10 @@ async function run() {
       fs.writeFileSync(path.join(dir, 'llms.txt'), llmsTxt, 'utf8');
     }
 
-    console.log(`✅ SEO build complete: ${routes.length} static routes + sitemap.xml + robots.txt + llms.txt generated.`);
+    const gzCount = precompressDistFiles(distDir);
+    console.log(
+      `✅ SEO build complete: ${routes.length} static routes + sitemap.xml + robots.txt + llms.txt + ${gzCount} .gz sidecars generated.`,
+    );
   } finally {
     fs.rmSync(ssrDir, { recursive: true, force: true });
   }

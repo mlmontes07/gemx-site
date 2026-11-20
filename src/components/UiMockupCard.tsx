@@ -1,5 +1,5 @@
 import { LayoutDashboard } from 'lucide-react';
-import { MockupPreview } from '../data/sitePagesData';
+import { MockupPreview } from '../data/homeData';
 
 export function UiMockupCard({ preview }: { preview: MockupPreview }) {
   return (

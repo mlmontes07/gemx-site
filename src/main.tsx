@@ -1,14 +1,22 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import './styles/cosmic.css';
-import { App } from './App';
+import { App, preloadRouteChunk } from './App';
 
 const rootEl = document.getElementById('root');
 if (rootEl) {
-  createRoot(rootEl).render(
+  const tree = (
     <StrictMode>
       <App />
     </StrictMode>
   );
+
+  if (rootEl.firstElementChild) {
+    void preloadRouteChunk(window.location.pathname).finally(() => {
+      hydrateRoot(rootEl, tree);
+    });
+  } else {
+    createRoot(rootEl).render(tree);
+  }
 }
 

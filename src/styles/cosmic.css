@@ -1,5 +1,40 @@
 @layer reset, theme, base, layout, components;
 
+/* Self-hosted Variable WOFF2 Fonts & Metric-Matched Fallbacks */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/inter-gemx.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url('/fonts/space-grotesk-gemx.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Roboto');
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Space Grotesk Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Roboto');
+  size-adjust: 103%;
+  ascent-override: 95%;
+  descent-override: 27%;
+  line-gap-override: 0%;
+}
+
 @layer reset {
   *,
   *::before,
@@ -21,7 +56,7 @@
   body {
     margin: 0;
     min-block-size: 100dvh;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.65;
     background-color: var(--bg-space);
     color: var(--text-main);
@@ -138,7 +173,7 @@
     --cosmic-gradient: linear-gradient(120deg var(--in-oklab), #92400e 0%, #b45309 52%, #d97706 100%);
 
     /* Layout & Radii */
-    --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    --font-display: 'Space Grotesk', 'Space Grotesk Fallback', 'Inter', 'Inter Fallback', system-ui, sans-serif;
     --container-max: 74rem;
     --radius-sm: 0.625rem;
     --radius-md: 1rem;

@@ -1,20 +1,20 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
-import { getRouteSeo } from '../seo/seoData';
+import { getRouteBreadcrumbs } from '../seo/breadcrumbsData';
 
 export function Breadcrumbs() {
   const { pathname } = useLocation();
-  const entry = getRouteSeo(pathname);
+  const breadcrumbs = getRouteBreadcrumbs(pathname);
 
-  if (entry.breadcrumbs.length <= 1) {
+  if (breadcrumbs.length <= 1) {
     return null;
   }
 
   return (
     <nav aria-label="Breadcrumb" className="seo-breadcrumbs">
       <ol role="list" className="seo-breadcrumbs-list">
-        {entry.breadcrumbs.map((crumb, idx) => {
-          const isLast = idx === entry.breadcrumbs.length - 1;
+        {breadcrumbs.map((crumb, idx) => {
+          const isLast = idx === breadcrumbs.length - 1;
           return (
             <li key={`${crumb.name}-${idx}`} className="seo-breadcrumbs-item">
               {idx > 0 && (

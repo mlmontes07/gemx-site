@@ -33,6 +33,38 @@ export interface HumanStoryCardProps {
   priority?: boolean;
   /** 'card' = full story card, 'compact' = horizontal inline strip for hero/forms */
   variant?: 'card' | 'compact';
+  /** Number of columns when rendered in a multi-card grid (controls responsive `sizes`) */
+  gridColumns?: 2 | 3;
+}
+
+export function buildPeopleSrcSet(photo: string, variant: 'card' | 'compact'): string {
+  if (variant === 'compact') {
+    return [
+      `/img/people/${photo}-240.webp 240w`,
+      `/img/people/${photo}-384.webp 384w`,
+      `/img/people/${photo}-520.webp 520w`,
+      `/img/people/${photo}-640.webp 640w`,
+      `/img/people/${photo}-800.webp 800w`,
+    ].join(', ');
+  }
+  return [
+    `/img/people/${photo}-240.webp 240w`,
+    `/img/people/${photo}-384.webp 384w`,
+    `/img/people/${photo}-520.webp 520w`,
+    `/img/people/${photo}-640.webp 640w`,
+    `/img/people/${photo}-800.webp 800w`,
+    `/img/people/${photo}-1280.webp 1280w`,
+  ].join(', ');
+}
+
+export function getPeopleSizes(variant: 'card' | 'compact', gridColumns: 2 | 3 = 2): string {
+  if (variant === 'compact') {
+    return '(max-width: 34rem) 68vw, 9.75rem';
+  }
+  if (gridColumns === 3) {
+    return '(max-width: 44rem) 64vw, (max-width: 68rem) 42vw, 23rem';
+  }
+  return '(max-width: 58rem) 64vw, (max-width: 78rem) 38vw, 31.8rem';
 }
 
 export function HumanStoryCard({
@@ -44,9 +76,10 @@ export function HumanStoryCard({
   personAttribution,
   priority = false,
   variant = 'card',
+  gridColumns = 2,
 }: HumanStoryCardProps) {
-  const webp800 = `/img/people/${photo}-800.webp`;
-  const webp1280 = `/img/people/${photo}-1280.webp`;
+  const srcSet = buildPeopleSrcSet(photo, variant);
+  const sizes = getPeopleSizes(variant, gridColumns);
   const jpgFallback = `/img/people/${photo}.jpg`;
 
   if (variant === 'compact') {
@@ -54,16 +87,13 @@ export function HumanStoryCard({
       <figure className="human-compact-card">
         <div className="human-compact-thumb">
           <picture>
-            <source
-              type="image/webp"
-              srcSet={`${webp800} 800w, ${webp1280} 1280w`}
-              sizes="(max-width: 48rem) 90vw, 18rem"
-            />
+            <source type="image/webp" srcSet={srcSet} sizes={sizes} />
             <img
               src={jpgFallback}
               alt={alt}
               width={1280}
               height={800}
+              decoding="async"
               {...(priority ? { fetchPriority: 'high' as const } : { loading: 'lazy' as const })}
             />
           </picture>
@@ -85,16 +115,13 @@ export function HumanStoryCard({
     <figure className="human-story-card">
       <div className="human-story-media">
         <picture>
-          <source
-            type="image/webp"
-            srcSet={`${webp800} 800w, ${webp1280} 1280w`}
-            sizes="(max-width: 60rem) 92vw, 36rem"
-          />
+          <source type="image/webp" srcSet={srcSet} sizes={sizes} />
           <img
             src={jpgFallback}
             alt={alt}
             width={1280}
             height={800}
+            decoding="async"
             {...(priority ? { fetchPriority: 'high' as const } : { loading: 'lazy' as const })}
           />
         </picture>

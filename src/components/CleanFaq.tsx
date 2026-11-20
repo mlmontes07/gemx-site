@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Minus, Plus } from 'lucide-react';
-import { FaqEntry } from '../data/sitePagesData';
+import { FaqEntry } from '../data/homeData';
 
 interface CleanFaqProps {
   items: FaqEntry[];

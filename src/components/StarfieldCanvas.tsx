@@ -91,12 +91,47 @@ export function StarfieldCanvas() {
       }
     };
 
-    resize();
-    drawFrame(0);
+    const startLoop = () => {
+      resize();
+      drawFrame(0);
+    };
+
+    const scheduleIdle =
+      typeof window.requestIdleCallback === 'function'
+        ? (cb: () => void) => window.requestIdleCallback(cb, { timeout: 600 })
+        : (cb: () => void) => window.setTimeout(cb, 120);
+
+    const cancelIdle =
+      typeof window.cancelIdleCallback === 'function'
+        ? (id: number) => window.cancelIdleCallback(id)
+        : (id: number) => window.clearTimeout(id);
+
+    let disposed = false;
+    const idleId = scheduleIdle(() => {
+      if (!disposed) {
+        startLoop();
+      }
+    });
+
+    const onVisibilityChange = () => {
+      if (prefersReducedMotion || stars.length === 0) return;
+      if (document.visibilityState === 'hidden') {
+        if (animationId) {
+          window.cancelAnimationFrame(animationId);
+          animationId = 0;
+        }
+      } else if (!animationId) {
+        animationId = window.requestAnimationFrame(drawFrame);
+      }
+    };
 
     window.addEventListener('resize', resize);
+    document.addEventListener('visibilitychange', onVisibilityChange);
     return () => {
+      disposed = true;
+      cancelIdle(idleId);
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       if (animationId) window.cancelAnimationFrame(animationId);
     };
   }, [resolvedTheme]);

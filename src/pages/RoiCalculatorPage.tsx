@@ -52,7 +52,7 @@ export function RoiCalculatorPage() {
                         color: 'var(--accent-stat)',
                       }}
                     >
-                      {headcount.toLocaleString()}
+                      {headcount.toLocaleString('en-PH')}
                     </output>
                   </div>
                   <input
@@ -170,7 +170,7 @@ export function RoiCalculatorPage() {
                         color: 'var(--accent-stat-alt)',
                       }}
                     >
-                      {annualFormsSaved.toLocaleString()}+
+                      {annualFormsSaved.toLocaleString('en-PH')}+
                     </strong>
                     <span style={{ fontSize: '0.78rem', color: 'var(--text-body)', display: 'block' }}>Every year</span>
                   </div>
